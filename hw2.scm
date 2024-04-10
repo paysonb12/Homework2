@@ -84,11 +84,13 @@
 ; The inputs '(1 2) and '(a b c) should return a single list:
 ; ((1 a) (1 b) (1 c) (2 a) (2 b) (2 c))
 ; lst1 & lst2 -- two flat lists.
-;(define (crossproduct lst1 lst2)
+(define (crossproduct lst1 lst2)
+  (append-map (lambda (x) (map (lambda (y) (list x y)) lst2)) lst1))
+
 
 
 (line "crossproduct")
-;(mydisplay (crossproduct '(1 2) '(a b c)))
+(mydisplay (crossproduct '(1 2) '(a b c)))
 (line "crossproduct")
 ; ---------------------------------------------
 
@@ -99,12 +101,17 @@
 ; zips -- the zipcode DB- You MUST pass the 'zipcodes' function
 ; from the 'zipcodes.scm' file for this. You can just call 'zipcodes' directly
 ; as shown in the sample example
-;(define (getLatLon zipcode zips)
+(define (getLatLon zipcode zips)
+  (let ((entry (assoc zipcode zips)))
+    (if entry
+        (cdr (cddr entry))
+        '())))
+
 
 
 
 (line "getLatLon")
-;(mydisplay (getLatLon 45056 zipcodes))
+(mydisplay (getLatLon 45056 zipcodes))
 (line "getLatLon")
 ; ---------------------------------------------
 
